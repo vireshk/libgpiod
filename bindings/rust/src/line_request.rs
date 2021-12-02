@@ -15,6 +15,7 @@ use super::{bindings, ChipInternal, EdgeEventBuffer, Error, LineConfig, RequestC
 /// Line request operations
 ///
 /// Allows interaction with a set of requested lines.
+#[derive(Debug)]
 pub struct LineRequest {
     request: *mut bindings::gpiod_line_request,
 }

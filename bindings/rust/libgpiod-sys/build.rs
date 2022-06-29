@@ -14,13 +14,25 @@ fn generate_bindings(files: &Vec<&str>) {
         println!("cargo:rerun-if-changed={}", file);
     }
 
+    if cfg!(feature = "gpiosim") {
+        println!("cargo:rerun-if-changed=gpiosim_wrapper.h");
+    }
+
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
     // the resulting bindings.
-    let bindings = bindgen::Builder::default()
+    let mut builder = bindgen::Builder::default()
         // The input header we would like to generate
         // bindings for.
-        .header("wrapper.h")
+        .header("wrapper.h");
+
+    if cfg!(feature = "gpiosim") {
+        builder = builder.header("gpiosim_wrapper.h");
+        println!("cargo:rustc-link-lib=kmod");
+        println!("cargo:rustc-link-lib=mount");
+    }
+
+    let bindings = builder
         // Tell cargo to invalidate the built crate whenever any of the
         // included header files changed.
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
@@ -46,6 +58,7 @@ fn build_gpiod(files: Vec<&str>) {
         .define("_GNU_SOURCE", None)
         .define("GPIOD_VERSION_STR", "\"libgpio-sys\"")
         .include("../../../include")
+        .include("/usr/include/libmount")
         .compile("gpiod");
 }
 
@@ -61,6 +74,8 @@ fn main() {
         "../../../lib/line-request.c",
         "../../../lib/misc.c",
         "../../../lib/request-config.c",
+        #[cfg(feature = "gpiosim")]
+        "../../../tests/gpiosim/gpiosim.c",
     ];
 
     #[cfg(feature = "generate")]

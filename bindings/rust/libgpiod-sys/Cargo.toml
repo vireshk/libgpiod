@@ -9,6 +9,7 @@ edition = "2018"
 
 [features]
 generate = [ "bindgen" ]
+gpiosim = [ "generate", "bindgen" ]
 
 [build-dependencies]
 bindgen = { version = "0.59.1", optional = true }

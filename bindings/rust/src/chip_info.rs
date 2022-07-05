@@ -11,6 +11,7 @@ use vmm_sys_util::errno::Error as IoError;
 use super::{bindings, ChipInternal, Error, Result};
 
 /// GPIO chip Information
+#[derive(Debug)]
 pub struct ChipInfo {
     info: *mut bindings::gpiod_chip_info,
 }

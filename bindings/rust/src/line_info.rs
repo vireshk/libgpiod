@@ -23,6 +23,7 @@ use super::{
 /// line, which does not include the line value.  The line must be requested
 /// to access the line value.
 
+#[derive(Debug)]
 pub struct LineInfo {
     info: *mut bindings::gpiod_line_info,
     ichip: Option<Arc<ChipInternal>>,

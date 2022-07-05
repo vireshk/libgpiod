@@ -21,6 +21,7 @@ use super::{
 /// character device. It exposes basic information about the chip and allows
 /// callers to retrieve information about each line, watch lines for state
 /// changes and make line requests.
+#[derive(Debug)]
 pub(crate) struct ChipInternal {
     chip: *mut bindings::gpiod_chip,
 }
@@ -52,10 +53,14 @@ impl Drop for ChipInternal {
     }
 }
 
+#[derive(Debug)]
 pub struct Chip {
     ichip: Arc<ChipInternal>,
     info: ChipInfo,
 }
+
+unsafe impl Send for Chip {}
+unsafe impl Sync for Chip {}
 
 impl Chip {
     /// Find a chip by path.

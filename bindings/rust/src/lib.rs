@@ -59,6 +59,7 @@ pub enum Error {
 }
 
 /// Direction settings.
+#[derive(Debug, PartialEq)]
 pub enum Direction {
     /// Request the line(s), but don't change direction.
     AsIs,
@@ -88,6 +89,7 @@ impl Direction {
 }
 
 /// Internal bias settings.
+#[derive(Debug, PartialEq)]
 pub enum Bias {
     /// Don't change the bias setting when applying line config.
     AsIs,
@@ -125,6 +127,7 @@ impl Bias {
 }
 
 /// Drive settings.
+#[derive(Debug, PartialEq)]
 pub enum Drive {
     /// Drive setting is push-pull.
     PushPull,
@@ -154,6 +157,7 @@ impl Drive {
 }
 
 /// Edge detection settings.
+#[derive(Debug, PartialEq)]
 pub enum Edge {
     /// Line edge detection is disabled.
     None,
@@ -223,6 +227,7 @@ impl Config {
 }
 
 /// Event clock settings.
+#[derive(Debug, PartialEq)]
 pub enum EventClock {
     /// Line uses the monotonic clock for edge event timestamps.
     Monotonic,
@@ -248,6 +253,7 @@ impl EventClock {
 }
 
 /// Line status change event types.
+#[derive(Debug, PartialEq)]
 pub enum Event {
     /// Line has been requested.
     LineRequested,
@@ -268,7 +274,7 @@ impl Event {
     }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 /// Edge event types.
 pub enum LineEdgeEvent {
     /// Rising edge event.
